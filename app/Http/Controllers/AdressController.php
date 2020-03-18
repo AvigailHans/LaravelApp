@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Resources\Address as AddressResource;
+use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\address;
-
+use DB;
 class AdressController extends Controller
 {
     /**
@@ -14,10 +15,17 @@ class AdressController extends Controller
      */
     public function index()
     {
-        $data= address::all();
-        
+        /*$data= address::all()->sortBy("street")->;
+        return  AddressResource::collection($data);
         return  view('adress')->with('data',$data);
+        $data= address::all()->whereNotNull('street');
+        whereNotNull('street')->get();
+        */
+        $data= address::whereNotNull('street')->get();
+        return  AddressResource::collection($data);
     }
+   
+   
 
     /**
      * Show the form for creating a new resource.

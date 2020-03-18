@@ -1,35 +1,35 @@
 <template>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header"></div>
-
-                    <div class="card-body">
-                        Avi
-                    </div>
-                </div>
-            </div>
-        </div>
+         <div v-for="address in addresses" v-bind:key="address.id">
+               {{address.id}} {{address.street}} {{address.city}} 
+         </div>
     </div>
 </template>
 
 <script>
     export default {
+         data()
+        {
+            return {
+                addresses:[]
+            }
+        },
         mounted() {
             console.log('Component mounted.');
-             this.getAdress();
+             
         },
         created()
         {
-             console.log('AAA')
+           
             this.getAdress();
         },
       methods: {
+     
        getAdress(){
-      fetch('api/address').then(res=>res.json())
-      .then(res=>{console.log(res.data);
-      })
+       console.log('AAA');
+       fetch('api/address').then(res=>res.json())
+      .then(res=>{this.addresses=res.data;})
+
        } 
     }
     }

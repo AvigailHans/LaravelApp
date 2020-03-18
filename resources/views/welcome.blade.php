@@ -64,12 +64,9 @@
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-
-                
+        <div class="flex-center position-ref ">       
                 <div  id="app">
-                <example-component></example-component>
-                <address></address>
+                <address-component></address-component>
                 </div>
             </div>
         </div>
