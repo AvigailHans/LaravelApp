@@ -3,6 +3,22 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+import Vue from 'vue'
+import * as VueGoogleMaps from 'vue2-google-maps'
+Vue.use(VueGoogleMaps, {
+    load: {
+      key: 'AIzaSyC4kmA5R3jgClPFDY-C092RE2RZ0uSRwY4',
+      CountryCode: 'IL',
+      language: 'iw',
+      libraries: 'places', // This is required if you use the Autocomplete plugin
+      // OR: libraries: 'places,drawing'
+      // OR: libraries: 'places,drawing,visualization'
+      // (as you require)
+   
+      //// If you want to set the version, you can do so:
+      // v: '3.26',
+    },
+})
 
 require('./bootstrap');
 

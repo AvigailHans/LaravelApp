@@ -133,6 +133,24 @@ return [
             'port' => env('REDIS_PORT', '6379'),
             'database' => env('REDIS_DB', '0'),
         ],
+        "redis" => [
+            // ...
+    
+            "geocode-cache" => [ // choose an appropriate name
+                'host' => env('REDIS_HOST', '192.168.10.10'),
+                'password' => env('REDIS_PASSWORD', null),
+                'port' => env('REDIS_PORT', 6379),
+                'database' => 2, // be sure this number differs from your other redis databases
+            ],
+        ],
+        "stores" => [
+            // ...
+    
+            "geocode" => [
+                'driver' => 'redis',
+                'connection' => 'geocode-cache',
+            ],
+        ],
 
         'cache' => [
             'url' => env('REDIS_URL'),

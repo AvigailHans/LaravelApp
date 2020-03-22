@@ -21,6 +21,7 @@ class AdressController extends Controller
         $data= address::all()->whereNotNull('street');
         whereNotNull('street')->get();
         */
+    
         $data= address::whereNotNull('street')->get();
         return  AddressResource::collection($data);
     }
