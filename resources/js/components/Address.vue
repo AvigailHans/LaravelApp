@@ -22,7 +22,7 @@
   <div class="scroll">
          
            <h3  v-for="address in addresses" v-bind:key="address.id"  @click="showMarker(address)" >
-          {{address.street}} {{address.city}} 
+          {{address.street}} {{address.city}} {{address.lat}}  {{address.lng}} 
           </h3>
         
         </div>
@@ -48,31 +48,49 @@
         },
         created()
         {
-           
+            
             this.getAdress();
         },
       methods: {
-        getMe(){
-       fetch('api/address').then(res=>res.json())
-      .then(res=>{console.log(res)})
-       } ,
+      
        getAdress(){
-       fetch('api/address').then(res=>res.json())
+       fetch('api/addresses').then(res=>res.json())
       .then(res=>{this.addresses=res.data;})
        } ,
        
       showMarker(address) {
           let a=address.street+" "+address.city;
+          let doupdate=address.lat==null;
+          if(doupdate){
           fetch("https://maps.googleapis.com/maps/api/geocode/json?address="+a+"&key=AIzaSyC4kmA5R3jgClPFDY-C092RE2RZ0uSRwY4")
           .then(res=>res.json())
           .then(res=>{this.center=res.results[0].geometry.location; this.markers[0].position=res.results[0].geometry.location})
-          this.markers[0].label=" lat: "+this.markers[0].position.lat+" lng: "+this.markers[0].position.lng;
+          }
+          else
+          {
+            this.center= { lat:parseFloat(address.lat), lng:parseFloat(address.lng)};
+            this.markers[0].position={ lat:parseFloat(address.lat), lng:parseFloat(address.lng)};
+            console.log(this.center ,this.markers[0].position)
+          }
+         this.markers[0].label=" lat: "+this.markers[0].position.lat+" lng: "+this.markers[0].position.lng;
          this.markers[0].title=a+"\n lat: "+this.markers[0].position.lat+" lng: "+this.markers[0].position.lng;
-         
-       
-       
+         address.lat=this.markers[0].position.lat;
+         address.lng=this.markers[0].position.lng;
+         if(doupdate)
+         {
+           this.updateAddress(address);
          }
+       
+         },
+           updateAddress(address){ 
+            console.log("blabla");
+             fetch('api/address',
+             {method:'put',body:JSON.stringify(address),headers:{'content-type':'application/json'}})
+             .catch(err=>console.log(err))
+         
     }
+    }
+  
     }
    
 </script>

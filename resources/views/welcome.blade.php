@@ -15,8 +15,6 @@
                 <div  id="app">
                
                 <address-component></address-component>
-               
-                
                 </div>
             </div>
         </div>
